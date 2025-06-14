@@ -1,0 +1,1 @@
+{ "name": "example", "value": 123, }  // ← invalid trailing comma
