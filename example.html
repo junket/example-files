@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cats by Moonlight - A Haiku</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(180deg, 
+                #0a0a15 0%, 
+                #0d1025 15%, 
+                #131842 35%, 
+                #1a1f5c 50%, 
+                #1e2a6e 65%, 
+                #162052 80%, 
+                #0f1535 100%);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            color: #e8e8e8;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Twinkling Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Shooting Star */
+        .shooting-star {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(90deg, #fff, transparent);
+            border-radius: 50%;
+            animation: shoot 8s ease-in-out infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+            transform: translateX(-100%);
+            top: 1px;
+        }
+
+        @keyframes shoot {
+            0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
+            2% { opacity: 1; }
+            8% { transform: translate(300px, 300px) rotate(-45deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .shooting-star:nth-child(2) {
+            top: 10%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        .shooting-star:nth-child(3) {
+            top: 25%;
+            left: 30%;
+            animation-delay: 7s;
+        }
+
+        /* Moonlight glow effect */
+        .moonlight {
+            position: fixed;
+            top: -100px;
+            right: 50px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, 
+                rgba(255, 248, 220, 0.15) 0%, 
+                rgba(255, 248, 220, 0.08) 30%, 
+                transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            animation: moonGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes moonGlow {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Fireflies */
+        .firefly {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fffacd 0%, #ffd700 40%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -30px); }
+            50% { transform: translate(20px, 40px); }
+            75% { transform: translate(-40px, 10px); }
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.2; box-shadow: 0 0 5px #ffd700; }
+            100% { opacity: 0.9; box-shadow: 0 0 15px #ffd700, 0 0 30px #ffa500; }
+        }
+
+        /* Main Container */
+        .haiku-container {
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Moon SVG */
+        .moon-svg {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 30px rgba(255, 248, 200, 0.5))
+                    drop-shadow(0 0 60px rgba(255, 248, 200, 0.3));
+            animation: moonFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Title Styling */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: transparent;
+            background: linear-gradient(180deg, 
+                #fff8dc 0%, 
+                #ffd700 30%, 
+                #daa520 60%, 
+                #b8860b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            animation: titleShimmer 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleShimmer {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); }
+        }
+
+        /* Decorative divider */
+        .divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            gap: 15px;
+        }
+
+        .divider-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c0a060, transparent);
+        }
+
+        .divider-star {
+            color: #c0a060;
+            font-size: 0.8rem;
+            animation: spinStar 10s linear infinite;
+        }
+
+        @keyframes spinStar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Haiku Styling */
+        .haiku {
+            font-size: 1.8rem;
+            line-height: 2.8;
+            font-style: italic;
+            font-weight: 400;
+            position: relative;
+        }
+
+        .haiku-line {
+            display: block;
+            opacity: 0;
+            animation: lineReveal 1s ease-out forwards;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .haiku-line:hover {
+            color: #ffecd2;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transform: scale(1.02);
+        }
+
+        .haiku-line:nth-child(1) {
+            animation-delay: 1s;
+            color: #e6e0ff;
+            text-shadow: 0 0 20px rgba(200, 200, 255, 0.3);
+        }
+
+        .haiku-line:nth-child(2) {
+            animation-delay: 2s;
+            color: #fff5e6;
+            text-shadow: 0 0 20px rgba(255, 220, 180, 0.3);
+        }
+
+        .haiku-line:nth-child(3) {
+            animation-delay: 3s;
+            color: #e0f0ff;
+            text-shadow: 0 0 20px rgba(180, 220, 255, 0.3);
+        }
+
+        @keyframes lineReveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cat silhouettes container */
+        .cats-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Garden wall silhouette */
+        .garden-wall {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            z-index: 2;
+        }
+
+        /* Cat Lottie animation container */
+        .lottie-cat {
+            position: fixed;
+            bottom: 60px;
+            width: 120px;
+            height: 120px;
+            z-index: 4;
+        }
+
+        .lottie-cat.left {
+            left: 10%;
+            animation: catWalk 20s linear infinite;
+        }
+
+        .lottie-cat.right {
+            right: 15%;
+            animation: catSit 4s ease-in-out infinite;
+        }
+
+        @keyframes catWalk {
+            0% { transform: translateX(-100px) scaleX(1); }
+            45% { transform: translateX(calc(80vw)) scaleX(1); }
+            50% { transform: translateX(calc(80vw)) scaleX(-1); }
+            95% { transform: translateX(-100px) scaleX(-1); }
+            100% { transform: translateX(-100px) scaleX(1); }
+        }
+
+        @keyframes catSit {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Paw prints */
+        .paw-prints {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .paw {
+            position: absolute;
+            font-size: 1rem;
+            color: rgba(200, 200, 200, 0.15);
+            animation: pawFade 8s ease-in-out infinite;
+        }
+
+        @keyframes pawFade {
+            0%, 100% { opacity: 0; }
+            20%, 80% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Signature */
+        .signature {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: rgba(192, 160, 96, 0.6);
+            letter-spacing: 0.2em;
+            font-style: normal;
+        }
+
+        /* Japanese characters decoration */
+        .japanese-deco {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 215, 0, 0.08);
+            writing-mode: vertical-rl;
+            font-family: serif;
+            letter-spacing: 0.5em;
+        }
+
+        .japanese-deco.left {
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .japanese-deco.right {
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Ambient particles */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: drift 15s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Cloud wisps */
+        .cloud {
+            position: fixed;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(200, 210, 240, 0.03), 
+                rgba(200, 210, 240, 0.05), 
+                rgba(200, 210, 240, 0.03), 
+                transparent);
+            border-radius: 50%;
+            animation: cloudDrift 60s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes cloudDrift {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; letter-spacing: 0.15em; }
+            .haiku { font-size: 1.4rem; line-height: 2.4; }
+            .moon-svg { width: 100px; height: 100px; }
+            .japanese-deco { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Shooting stars -->
+    <div class="shooting-star" style="top: 5%; left: 80%;"></div>
+    <div class="shooting-star" style="top: 15%; left: 60%;"></div>
+    <div class="shooting-star" style="top: 8%; left: 40%;"></div>
+
+    <!-- Moonlight glow -->
+    <div class="moonlight"></div>
+
+    <!-- Fireflies -->
+    <div class="firefly" style="top: 30%; left: 10%; animation-delay: 0s;"></div>
+    <div class="firefly" style="top: 50%; left: 85%; animation-delay: 2s;"></div>
+    <div class="firefly" style="top: 70%; left: 20%; animation-delay: 4s;"></div>
+    <div class="firefly" style="top: 40%; left: 75%; animation-delay: 6s;"></div>
+    <div class="firefly" style="top: 60%; left: 5%; animation-delay: 8s;"></div>
+
+    <!-- Ambient particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 25%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 45%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 65%; animation-delay: 9s;"></div>
+    <div class="particle" style="left: 85%; animation-delay: 12s;"></div>
+
+    <!-- Cloud wisps -->
+    <div class="cloud" style="top: 10%; width: 400px; height: 30px; animation-delay: 0s;"></div>
+    <div class="cloud" style="top: 25%; width: 300px; height: 20px; animation-delay: 20s;"></div>
+    <div class="cloud" style="top: 40%; width: 350px; height: 25px; animation-delay: 40s;"></div>
+
+    <!-- Paw prints -->
+    <div class="paw-prints" id="pawPrints"></div>
+
+    <!-- Garden Wall SVG -->
+    <svg class="garden-wall" viewBox="0 0 1920 80" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#2a2a4a;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 Q100,10 200,30 T400,25 T600,35 T800,28 T1000,32 T1200,26 T1400,34 T1600,28 T1800,32 L1920,30 L1920,80 L0,80 Z" fill="url(#wallGradient)"/>
+        <path d="M0,35 Q100,20 200,35 T400,30 T600,40 T800,33 T1000,37 T1200,31 T1400,39 T1600,33 T1800,37 L1920,35" stroke="rgba(100,100,140,0.3)" stroke-width="1" fill="none"/>
+    </svg>
+
+    <!-- Cat Silhouettes SVG -->
+    <svg class="cats-container" viewBox="0 0 1920 200" preserveAspectRatio="xMidYMax slice">
+        <!-- Cat 1 - Sitting on left, looking up -->
+        <g transform="translate(150, 80)" class="cat-silhouette">
+            <path d="M0,100 Q5,90 8,70 L12,50 Q14,45 18,50 L22,70 Q25,90 30,100 
+                     Q35,95 40,90 Q45,92 50,95 Q55,85 60,80 L60,100 
+                     Q55,105 40,105 Q20,105 0,100 Z" 
+                  fill="#1a1a2e">
+                <animate attributeName="d" 
+                         dur="4s" 
+                         repeatCount="indefinite" 
+                         values="M0,100 Q5,90 8,70 L12,50 Q14,45 18,50 L22,70 Q25,90 30,100 Q35,95 40,90 Q45,92 50,95 Q55,85 60,80 L60,100 Q55,105 40,105 Q20,105 0,100 Z;
+                                 M0,100 Q5,90 8,68 L14,48 Q16,43 20,50 L24,70 Q27,90 32,100 Q37,95 42,90 Q47,92 52,95 Q57,85 62,78 L62,100 Q57,105 42,105 Q22,105 0,100 Z;
+                                 M0,100 Q5,90 8,70 L12,50 Q14,45 18,50 L22,70 Q25,90 30,100 Q35,95 40,90 Q45,92 50,95 Q55,85 60,80 L60,100 Q55,105 40,105 Q20,105 0,100 Z"/>
+            </path>
+            <!-- Tail -->
+            <path d="M60,95 Q80,85 90,70 Q95,60 85,55" stroke="#1a1a2e" stroke-width="6" fill="none" stroke-linecap="round">
+                <animate attributeName="d" 
+                         dur="3s" 
+                         repeatCount="indefinite" 
+                         values="M60,95 Q80,85 90,70 Q95,60 85,55;
+                                 M60,95 Q75,80 95,75 Q100,70 92,60;
+                                 M60,95 Q80,85 90,70 Q95,60 85,55"/>
+            </path>
+            <!-- Eyes -->
+            <ellipse cx="10" cy="58" rx="3" ry="4" fill="#7fdbda">
+                <animate attributeName="ry" dur="4s" repeatCount="indefinite" values="4;1;4" keyTimes="0;0.1;1"/>
+            </ellipse>
+            <ellipse cx="22" cy="58" rx="3" ry="4" fill="#7fdbda">
+                <animate attributeName="ry" dur="4s" repeatCount="indefinite" values="4;1;4" keyTimes="0;0.1;1"/>
+            </ellipse>
+        </g>
+
+        <!-- Cat 2 - Walking in middle -->
+        <g transform="translate(900, 100)" class="cat-silhouette">
+            <animateTransform attributeName="transform" type="translate" 
+                              dur="25s" repeatCount="indefinite"
+                              values="900,100; 1100,100; 900,100; 700,100; 900,100"/>
+            <!-- Body -->
+            <ellipse cx="40" cy="70" rx="35" ry="20" fill="#1a1a2e"/>
+            <!-- Head -->
+            <circle cx="85" cy="55" r="18" fill="#1a1a2e"/>
+            <!-- Ears -->
+            <path d="M75,40 L70,25 L80,35 Z" fill="#1a1a2e"/>
+            <path d="M95,40 L100,25 L90,35 Z" fill="#1a1a2e"/>
+            <!-- Tail -->
+            <path d="M5,65 Q-15,50 -10,30" stroke="#1a1a2e" stroke-width="6" fill="none" stroke-linecap="round">
+                <animate attributeName="d" dur="1s" repeatCount="indefinite" 
+                         values="M5,65 Q-15,50 -10,30; M5,65 Q-20,55 -15,35; M5,65 Q-15,50 -10,30"/>
+            </path>
+            <!-- Legs animation -->
+            <line x1="25" y1="85" x2="20" y2="100" stroke="#1a1a2e" stroke-width="5">
+                <animate attributeName="x2" dur="0.5s" repeatCount="indefinite" values="20;25;20"/>
+            </line>
+            <line x1="35" y1="88" x2="38" y2="100" stroke="#1a1a2e" stroke-width="5">
+                <animate attributeName="x2" dur="0.5s" repeatCount="indefinite" values="38;33;38"/>
+            </line>
+            <line x1="50" y1="88" x2="48" y2="100" stroke="#1a1a2e" stroke-width="5">
+                <animate attributeName="x2" dur="0.5s" repeatCount="indefinite" values="48;53;48"/>
+            </line>
+            <line x1="60" y1="85" x2="65" y2="100" stroke="#1a1a2e" stroke-width="5">
+                <animate attributeName="x2" dur="0.5s" repeatCount="indefinite" values="65;60;65"/>
+            </line>
+            <!-- Eyes (glowing) -->
+            <circle cx="80" cy="52" r="3" fill="#b8f0b8">
+                <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="1;0.5;1"/>
+            </circle>
+            <circle cx="92" cy="52" r="3" fill="#b8f0b8">
+                <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="1;0.5;1"/>
+            </circle>
+        </g>
+
+        <!-- Cat 3 - Sitting on right, grooming -->
+        <g transform="translate(1650, 70)">
+            <!-- Body -->
+            <ellipse cx="40" cy="90" rx="30" ry="22" fill="#1a1a2e"/>
+            <!-- Head -->
+            <circle cx="35" cy="55" r="22" fill="#1a1a2e">
+                <animate attributeName="cy" dur="2s" repeatCount="indefinite" values="55;60;55"/>
+            </circle>
+            <!-- Ears -->
+            <path d="M20,38 L12,18 L28,30 Z" fill="#1a1a2e"/>
+            <path d="M50,38 L58,18 L42,30 Z" fill="#1a1a2e"/>
+            <!-- Tail wrapped around -->
+            <path d="M70,95 Q90,90 95,75 Q98,60 85,55 Q75,52 70,60" stroke="#1a1a2e" stroke-width="8" fill="none" stroke-linecap="round">
+                <animate attributeName="d" dur="5s" repeatCount="indefinite"
+                         values="M70,95 Q90,90 95,75 Q98,60 85,55 Q75,52 70,60;
+                                 M70,95 Q88,88 93,73 Q96,58 83,53 Q73,50 68,58;
+                                 M70,95 Q90,90 95,75 Q98,60 85,55 Q75,52 70,60"/>
+            </path>
+            <!-- Eyes closed (grooming) -->
+            <path d="M25,52 Q30,55 35,52" stroke="#7fdbda" stroke-width="2" fill="none"/>
+            <path d="M38,52 Q43,55 48,52" stroke="#7fdbda" stroke-width="2" fill="none"/>
+            <!-- Paw up (grooming) -->
+            <ellipse cx="15" cy="70" rx="8" ry="6" fill="#1a1a2e">
+                <animate attributeName="cy" dur="2s" repeatCount="indefinite" values="70;65;70"/>
+            </ellipse>
+        </g>
+    </svg>
+
+    <!-- Main Content -->
+    <div class="haiku-container">
+        <!-- Japanese decoration -->
+        <span class="japanese-deco left">月夜の猫</span>
+        <span class="japanese-deco right">俳句</span>
+
+        <!-- Moon SVG -->
+        <svg class="moon-svg" viewBox="0 0 100 100">
+            <defs>
+                <radialGradient id="moonGrad" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" style="stop-color:#fffef5"/>
+                    <stop offset="50%" style="stop-color:#fff8dc"/>
+                    <stop offset="100%" style="stop-color:#f0e68c"/>
+                </radialGradient>
+                <filter id="moonGlow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <radialGradient id="craterGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:rgba(180,160,120,0.3)"/>
+                    <stop offset="100%" style="stop-color:rgba(180,160,120,0)"/>
+                </radialGradient>
+            </defs>
+            <!-- Main moon circle -->
+            <circle cx="50" cy="50" r="45" fill="url(#moonGrad)" filter="url(#moonGlow)"/>
+            <!-- Moon craters (subtle) -->
+            <circle cx="35" cy="35" r="8" fill="url(#craterGrad)"/>
+            <circle cx="55" cy="25" r="5" fill="url(#craterGrad)"/>
+            <circle cx="65" cy="50" r="7" fill="url(#craterGrad)"/>
+            <circle cx="40" cy="60" r="10" fill="url(#craterGrad)"/>
+            <circle cx="60" cy="70" r="6" fill="url(#craterGrad)"/>
+            <!-- Subtle highlight -->
+            <ellipse cx="35" cy="35" rx="15" ry="12" fill="rgba(255,255,255,0.1)" transform="rotate(-30 35 35)"/>
+        </svg>
+
+        <h1>Cats by Moonlight</h1>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-star">✦</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <p class="haiku">
+            <span class="haiku-line">Silver moonbeams fall</span>
+            <span class="haiku-line">Soft paws dance on garden walls</span>
+            <span class="haiku-line">Night belongs to cats</span>
+        </p>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-star">✦</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <p class="signature">— A Haiku —</p>
+    </div>
+
+    <script>
+        // Generate twinkling stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 70 + '%'; // Keep stars in upper portion
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Generate paw prints
+        function createPawPrints() {
+            const pawContainer = document.getElementById('pawPrints');
+            const paws = ['🐾'];
+            const pawCount = 20;
+            
+            for (let i = 0; i < pawCount; i++) {
+                const paw = document.createElement('div');
+                paw.className = 'paw';
+                paw.textContent = paws[0];
+                paw.style.left = Math.random() * 100 + '%';
+                paw.style.bottom = Math.random() * 30 + '%';
+                paw.style.transform = 'rotate(' + (Math.random() * 60 - 30) + 'deg)';
+                paw.style.animationDelay = Math.random() * 8 + 's';
+                pawContainer.appendChild(paw);
+            }
+        }
+
+        // Initialize
+        createStars();
+        createPawPrints();
+
+        // Optional: Add parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const stars = document.getElementById('stars');
+            stars.style.transform = `translate(${x * 10 - 5}px, ${y * 10 - 5}px)`;
+        });
+
+        // Lottie animation initialization (if available)
+        if (typeof lottie !== 'undefined') {
+            // You can add custom Lottie animations here
+            // Example: lottie.loadAnimation({...})
+        }
+    </script>
+</body>
+</html>
