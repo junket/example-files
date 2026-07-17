@@ -1,0 +1,22 @@
+name: John Titor
+age: 29
+email: john-2036@titor.com
+is_active: true
+
+preferences:
+  theme: dark
+  notifications: true
+  language: en
+
+roles:
+  - time traveler
+  - blogger
+
+address:
+  street: 123 Main St
+  city: Exampleville
+  zip: "12345"
+
+bio: >
+  Titor claimed to be an American soldier from the year 2036, based in Tampa, Florida.
+  He said that he was assigned to a governmental ...
